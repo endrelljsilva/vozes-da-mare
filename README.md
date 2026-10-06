@@ -1,8 +1,10 @@
 # 🌊 Vozes da Maré
 
+> 🌐 **Site no ar (GitHub Pages):** [https://endrelljsilva.github.io/vozes-da-mare/](https://endrelljsilva.github.io/vozes-da-mare/)
+
 Aplicativo web instalável (PWA) para **pescadoras artesanais e moradores de Itapissuma, Pernambuco**.
 Reúne, de forma visual e falada, o que a pessoa precisa saber antes de sair para a água:
-clima, mapa, peixes, riscos, saúde e — em breve — maré.
+clima, mapa, peixes, riscos, saúde e maré.
 
 O diferencial é a **assistente de voz**: a usuária aperta um botão, pergunta em português
 com as próprias palavras e ouve a resposta.
