@@ -1,0 +1,9 @@
+# Vozes da Maré — SPA fallback
+#
+# O app usa rotas do navegador (/clima, /voz, /peixes...). Sem esta regra,
+# abrir ou recarregar qualquer uma dessas URLs direto no servidor devolve 404
+# e a usuária cai numa página de erro do provedor.
+#
+# Funciona em: Netlify, Cloudflare Pages e Vercel.
+
+/*  /index.html  200

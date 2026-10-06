@@ -1,0 +1,284 @@
+﻿@import 'tailwindcss';
+
+/* ---------------------------------------------------------------------------
+   Vozes da Maré — sistema de design
+   Paleta oficial amostrada do arquivo logo.png (cores da marca, inalteradas):
+     #82B6CB  azul pastel      #FCDCBD  creme/areia
+     #FBEAD6  creme claro      #F48653  laranja pastel
+   --------------------------------------------------------------------------- */
+@theme {
+  --color-mare-50: #f4fafc;
+  --color-mare-100: #e6f1f6;
+  --color-mare-200: #cfe6ee;
+  --color-mare-300: #aed2e0;
+  --color-mare-400: #82b6cb; /* oficial */
+  --color-mare-500: #6ba2b9;
+  --color-mare-600: #558aa3;
+  --color-mare-700: #417085;
+  --color-mare-900: #2b4c5c;
+
+  --color-areia-50: #fffaf4;
+  --color-areia-100: #fbead6; /* oficial */
+  --color-areia-200: #fcdcbd; /* oficial */
+  --color-areia-300: #f8d3a6;
+  --color-areia-400: #f0bf85;
+
+  --color-laranja-200: #fcd3b8;
+  --color-laranja-300: #faa877;
+  --color-laranja-500: #f48653; /* oficial */
+  --color-laranja-600: #e1703c;
+  --color-laranja-700: #c25c2e;
+
+  /* Tinta: azul profundo derivado do azul da marca (contraste AA em cima do creme) */
+  --color-tinta: #22414f;
+  --color-tinta-suave: #4c6b79;
+  --color-tinta-tenue: #7d95a1;
+
+  /* Cores semânticas (suaves, nunca neon) */
+  --color-seguro: #7fb87c;
+  --color-seguro-suave: #e8f4e7;
+  --color-atencao: #f2c75e;
+  --color-atencao-suave: #fdf3d9;
+  --color-perigo: #e57878;
+  --color-perigo-suave: #fbe8e8;
+
+  /* Pele e cabelo da personagem — pertencem ao mesmo universo pastel */
+  --color-pele: #b0754e;
+  --color-pele-escura: #8f5c3a;
+  --color-cabelo: #3a2a20;
+
+  --font-sans: 'Nunito', ui-rounded, 'Segoe UI', system-ui, sans-serif;
+  --font-titulo: 'Quicksand', 'Nunito', ui-rounded, system-ui, sans-serif;
+
+  --shadow-card: 0 4px 16px -6px rgb(43 76 92 / 0.18);
+  --shadow-card-hover: 0 10px 24px -10px rgb(43 76 92 / 0.28);
+  --shadow-botao: 0 10px 24px -10px rgb(244 134 83 / 0.65);
+  --shadow-onda: 0 -6px 24px -12px rgb(43 76 92 / 0.25);
+
+  --animate-flutuar: flutuar 5s ease-in-out infinite;
+  --animate-onda: onda 9s linear infinite;
+  --animate-piscar: piscar 1.1s ease-in-out infinite;
+  --animate-brilho: brilho 2.4s ease-in-out infinite;
+}
+
+@keyframes flutuar {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes onda {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes piscar {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0.12);
+  }
+}
+
+@keyframes brilho {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.82);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  html,
+  body,
+  #root {
+    min-height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-areia-100);
+    color: var(--color-tinta);
+    font-family: var(--font-sans);
+    font-weight: 500;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-titulo);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  /* Foco visível e consistente em toda a aplicação (acessibilidade §23) */
+  :focus-visible {
+    outline: 3px solid var(--color-mare-600);
+    outline-offset: 3px;
+    border-radius: 0.75rem;
+  }
+
+  /* Respeita quem prefere menos movimento (§27: animações leves) */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@utility card-base {
+  background-color: #fff;
+  border: 1px solid var(--color-areia-200);
+  border-radius: 1.75rem;
+  box-shadow: var(--shadow-card);
+}
+
+/* Esconde visualmente, mantém legível por leitores de tela */
+@utility visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Mapa (Leaflet)
+   O Leaflet traz um visual cinza que briga com a marca. Aqui ele adoptsa as
+   cores da logo e o traço arredondado do resto do aplicativo.
+   --------------------------------------------------------------------------- */
+@layer components {
+  .leaflet-container {
+    background: #dcecf3;
+    font-family: var(--font-sans);
+    font-weight: 600;
+  }
+
+  .leaflet-container a {
+    color: var(--color-mare-700);
+  }
+
+  /* --- Marcadores: sombra por CSS, nunca por <filter id> repetido no HTML --- */
+  .marcador-mapa {
+    background: none;
+    border: 0;
+    transition: transform 0.15s ease;
+  }
+
+  .marcador-mapa svg {
+    filter: drop-shadow(0 3px 4px rgb(34 65 79 / 0.32));
+  }
+
+  .marcador-mapa:hover,
+  .marcador-mapa:focus-visible {
+    transform: translateY(-2px) scale(1.06);
+    z-index: 600;
+  }
+
+  /* --- Balão de informação --- */
+  .leaflet-popup-content-wrapper {
+    border: 1px solid var(--color-areia-200);
+    border-radius: 1.25rem;
+    background: #fff;
+    box-shadow: 0 10px 28px -14px rgb(43 76 92 / 0.45);
+  }
+
+  .leaflet-popup-content {
+    margin: 0.9rem 1.1rem;
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: var(--color-tinta);
+  }
+
+  .leaflet-popup-content strong {
+    font-family: var(--font-titulo);
+    font-size: 1rem;
+    font-weight: 700;
+  }
+
+  .leaflet-popup-content em {
+    color: var(--color-mare-700);
+    font-style: normal;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .leaflet-popup-tip {
+    border: 1px solid var(--color-areia-200);
+    background: #fff;
+  }
+
+  .leaflet-popup-close-button {
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 0;
+    color: var(--color-tinta-suave);
+    font-size: 1.1rem;
+  }
+
+  /* --- Botões de zoom --- */
+  .leaflet-bar {
+    overflow: hidden;
+    border: 1px solid var(--color-areia-200);
+    border-radius: 0.9rem;
+    box-shadow: 0 4px 14px -8px rgb(43 76 92 / 0.4);
+  }
+
+  .leaflet-bar a {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-bottom-color: var(--color-areia-200);
+    background: #fff;
+    color: var(--color-mare-700);
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 2.1rem;
+  }
+
+  .leaflet-bar a:hover {
+    background: var(--color-mare-50);
+    color: var(--color-mare-900);
+  }
+
+  .leaflet-control-attribution {
+    background: rgb(255 255 255 / 0.85);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: var(--color-tinta-suave);
+  }
+
+  .leaflet-control-attribution a {
+    color: var(--color-mare-700);
+  }
+}
